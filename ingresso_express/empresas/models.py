@@ -5,7 +5,6 @@ from django.forms import ValidationError
 class Empresa(models.Model):
     cnpj = models.CharField(max_length=14, unique=True)
     nome = models.CharField(max_length=200)
-    admin = models.ForeignKey(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=200, unique=True)
     telefone = models.CharField(max_length=20)
     dados_bancarios = models.OneToOneField('DadosBancarios', on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='rel_empresa')

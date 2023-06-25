@@ -4,7 +4,7 @@ from .models import Empresa
 class EmpresaRegistrationForm(forms.ModelForm):
     class Meta:
         model = Empresa
-        fields = ['nome', 'cnpj', 'cidade', 'estado', 'email', 'telefone', 'enderecos', 'dados_bancarios']
+        fields = ['cnpj', 'nome', 'admin', 'email', 'telefone', 'dados_bancarios']
         
     def clean_email(self):
         email = self.cleaned_data.get('email')

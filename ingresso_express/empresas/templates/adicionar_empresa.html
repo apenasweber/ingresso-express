@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Adicionar Empresa</title>
+</head>
+<body>
+  <h1>Adicionar Empresa</h1>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Registrar Empresa</button>
+  </form>
+</body>
+</html>
