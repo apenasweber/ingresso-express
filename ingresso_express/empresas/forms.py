@@ -1,50 +1,7 @@
 from django import forms
-from .models import Empresa, Atracao, Pacote
-
-
-class AtracaoForm(forms.ModelForm):
-    class Meta:
-        model = Atracao
-        fields = [
-            "nome",
-            "preco_semana_de",
-            "preco_semana_por",
-            "preco_fim_semana_de",
-            "preco_fim_semana_por",
-            "regras",
-            "descricao",
-            "foto",
-            "video",
-        ]
-
-
-class PacoteForm(forms.ModelForm):
-    class Meta:
-        model = Pacote
-        """
-            nome = models.CharField(max_length=200)
-    atracoes = models.ManyToManyField(Atracao)
-    preco_semana_de = models.DecimalField(max_digits=10, decimal_places=2)
-    preco_semana_por = models.DecimalField(max_digits=10, decimal_places=2)
-    preco_fim_semana_de = models.DecimalField(max_digits=10, decimal_places=2)
-    preco_fim_semana_por = models.DecimalField(max_digits=10, decimal_places=2)
-    regras = models.TextField()
-    descricao = models.TextField()
-    foto = models.ImageField(upload_to='pacote_fotos/')
-    video = models.URLField()
-        """
-        fields = [
-            "nome",
-            "atracoes",
-            "preco_semana_de",
-            "preco_semana_por",
-            "preco_fim_semana_de",
-            "preco_fim_semana_por",
-            "regras",
-            "descricao",
-            "foto",
-            "video",
-        ]
+from django.contrib.auth.forms import AuthenticationForm
+from django import forms
+from .models import Empresa
 
 
 class EmpresaRegistrationForm(forms.ModelForm):
@@ -91,3 +48,14 @@ class EmpresaForm(forms.ModelForm):
             "chave_pix": forms.TextInput(attrs={"class": "form-control"}),
             "tipo_chave": forms.Select(attrs={"class": "form-control"}),
         }
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label="Username",
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    password = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+    )

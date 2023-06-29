@@ -1,0 +1,9 @@
+{% block content %}
+<div class="container">
+  <h2 class="mt-5">Cadastrar Nova Empresa</h2>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </form>
+</div>
+{% endblock %}
