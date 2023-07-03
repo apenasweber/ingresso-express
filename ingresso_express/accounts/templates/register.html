@@ -1,9 +1,9 @@
-{% block content %}
-<div class="container">
-  <h2 class="mt-5">Cadastrar Nova Empresa</h2>
-  <form method="post">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Cadastrar</button>
-  </form>
-</div>
-{% endblock %}
+<form method="post">
+  {% csrf_token %} {{ form.email.label_tag }} {{ form.email }}
+  <br />
+  {{ form.password1.label_tag }} {{ form.password1 }}
+  <br />
+  {{ form.password2.label_tag }} {{ form.password2 }}
+  <br />
+  <input type="submit" value="Cadastrar" />
+</form>

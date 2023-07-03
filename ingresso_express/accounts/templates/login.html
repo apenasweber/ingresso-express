@@ -1,17 +1,12 @@
-{% block content %}
-<div class="container">
-  <h2 class="mt-5">Login</h2>
-  <form method="post" class="mt-4">
-    {% csrf_token %}
-    <div class="form-group">
-      <label for="id_username">Username</label>
-      {{ form.username }}
-    </div>
-    <div class="form-group">
-      <label for="id_password">Password</label>
-      {{ form.password }}
-    </div>
-    <button type="submit" class="btn btn-primary">Entrar</button>
-  </form>
-</div>
-{% endblock %}
+<form method="post" class="mt-4">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="id_username">Email</label>
+    {{ form.username }}
+  </div>
+  <div class="form-group">
+    <label for="id_password">Senha</label>
+    {{ form.password }}
+  </div>
+  <button type="submit" class="btn btn-primary">Entrar</button>
+</form>

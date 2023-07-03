@@ -1,9 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.forms import ValidationError
+from django.contrib.auth.models import User
 
 
 class Empresa(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     cnpj = models.CharField(max_length=14, unique=True)
     nome = models.CharField(max_length=200)
     email = models.EmailField(max_length=200, unique=True)
@@ -212,3 +213,38 @@ class DadosBancarios(models.Model):
             return f"{self.banco} - {self.agencia}/{self.conta}"
         else:
             return f"{self.get_tipo_chave_pix_display()}: {self.chave_pix}"
+
+
+from django.db import models
+from django.core.validators import MinValueValidator
+from decimal import Decimal
+
+
+class Atracao(models.Model):
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField()
+    preco_fim_de_semana = models.DecimalField(
+        max_digits=7, decimal_places=2, validators=[MinValueValidator(Decimal("0"))]
+    )
+    preco_feriado = models.DecimalField(
+        max_digits=7, decimal_places=2, validators=[MinValueValidator(Decimal("0"))]
+    )
+    data_expiracao = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.nome
+
+
+class Pacote(models.Model):
+    nome = models.CharField(max_length=200)
+    atracoes = models.ManyToManyField(Atracao)
+    preco_fim_de_semana = models.DecimalField(
+        max_digits=7, decimal_places=2, validators=[MinValueValidator(Decimal("0"))]
+    )
+    preco_feriado = models.DecimalField(
+        max_digits=7, decimal_places=2, validators=[MinValueValidator(Decimal("0"))]
+    )
+    data_expiracao = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.nome

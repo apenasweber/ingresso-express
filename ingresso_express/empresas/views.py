@@ -3,28 +3,31 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Empresa
-from .forms import EmpresaForm
+from .forms import EmpresaForm, LoginForm
+from django.contrib.auth import authenticate, login
 
 
-@login_required
 def registrar_empresa(request):
     if request.method == "POST":
         form = EmpresaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("dashboard_empresa")
+            return redirect("empresas:dashboard_empresa")
     else:
         form = EmpresaForm()
     return render(request, "empresas/registrar.html", {"form": form})
 
 
-@login_required
 def login_empresa(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
-            # Autenticação e redirecionamento
-            return redirect("dashboard_empresa")
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("empresas:dashboard_empresa")
     else:
         form = LoginForm()
     return render(request, "empresas/login.html", {"form": form})
@@ -67,7 +70,8 @@ def editar_empresa(request):
         form = EmpresaForm(request.POST, instance=empresa)
         if form.is_valid():
             form.save()
-            return redirect("dashboard")
+            return redirect("empresas:dashboard_empresa")
+
     else:
         form = EmpresaForm(instance=empresa)
     return render(request, "editar_empresa.html", {"form": form})
