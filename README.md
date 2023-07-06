@@ -1,12 +1,12 @@
 # V1 - Experiência da Empresa
 
-## Admin ingresso express
+## Admin ingresso express ☑️
 
 - Como admin ingresso express, eu quero poder adicionar empresa(s) para que estas criem suas ofertas e pacotes. ☑️
 
 ## Admin empresa
 
-- Como empresa, eu quero poder logar no sistema para que eu possa criar ofertas e pacotes.
+- Como empresa, eu quero poder logar no sistema com email e senha para que eu possa criar ofertas e pacotes.
 - Como empresa, eu quero poder recuperar minha senha para que eu possa logar no sistema.
 - Como empresa eu quero poder editar meus dados cadastrais, com exceção do cnpj, para que eu possa atualizar meus dados.
 
