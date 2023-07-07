@@ -9,45 +9,41 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="mt-5">Dashboard da Empresa</h1>
-
-      <div class="row">
-        <div class="col">
-          <h2 class="mt-4">Pacotes</h2>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Pacote 1</h5>
-              <p class="card-text">Descrição: Lorem ipsum dolor sit amet.</p>
-              <p class="card-text">Preço: R$ 100</p>
-            </div>
-          </div>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Pacote 2</h5>
-              <p class="card-text">Descrição: Consectetur adipiscing elit.</p>
-              <p class="card-text">Preço: R$ 150</p>
-            </div>
-          </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Dashboard</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'empresas:criar_atracao' %}"
+                >Criar Atração</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'empresas:criar_pacote' %}"
+                >Criar Pacote</a
+              >
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+            </li>
+            {% endif %}
+          </ul>
         </div>
+      </nav>
 
-        <div class="col">
-          <h2 class="mt-4">Atrações</h2>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Atração 1</h5>
-              <p class="card-text">Descrição: Lorem ipsum dolor sit amet.</p>
-              <p class="card-text">Horário de Funcionamento: 9:00 - 18:00</p>
-            </div>
-          </div>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5 class="card-title">Atração 2</h5>
-              <p class="card-text">Descrição: Consectetur adipiscing elit.</p>
-              <p class="card-text">Horário de Funcionamento: 10:00 - 20:00</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Resto do código -->
     </div>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

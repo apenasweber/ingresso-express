@@ -1,9 +1,10 @@
+from django.contrib.auth import logout
 from empresas.models import Empresa
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Empresa
-from .forms import EmpresaForm, LoginForm
+from .forms import EmpresaForm, LoginForm, AtracaoForm, PacoteForm
 from django.contrib.auth import authenticate, login
 
 
@@ -30,29 +31,15 @@ def login_empresa(request):
                 return redirect("empresas:dashboard_empresa")
     else:
         form = LoginForm()
-    return render(request, "empresas/login.html", {"form": form})
+    return render(request, "accounts/login.html", {"form": form})
 
 
 @login_required
 def dashboard_empresa(request):
     try:
-        empresa = Empresa.objects.get(admin=request.user)
-        valor_vendido = empresa.get_valor_vendido()
-        clientes_nao_expirados = empresa.get_clientes_nao_expirados()
-        acessos_pagina_principal = empresa.get_acessos_pagina_principal()
-        acessos_atracao = empresa.get_acessos_por_atracao()
-        acessos_pacote = empresa.get_acessos_por_pacote()
-
         return render(
             request,
             "dashboard.html",
-            {
-                "valor_vendido": valor_vendido,
-                "clientes_nao_expirados": clientes_nao_expirados,
-                "acessos_pagina_principal": acessos_pagina_principal,
-                "acessos_atracao": acessos_atracao,
-                "acessos_pacote": acessos_pacote,
-            },
         )
     except ObjectDoesNotExist:
         # A empresa não existe
@@ -75,3 +62,41 @@ def editar_empresa(request):
     else:
         form = EmpresaForm(instance=empresa)
     return render(request, "editar_empresa.html", {"form": form})
+
+
+@login_required
+def criar_atracao(request):
+    if request.method == "POST":
+        form = AtracaoForm(request.POST)
+        if form.is_valid():
+            atracao = form.save(commit=False)
+            atracao.empresa = Empresa.objects.get(user=request.user)
+            atracao.save()
+            return redirect("empresas:dashboard_empresa")
+    else:
+        form = AtracaoForm()
+    return render(request, "empresas/criar_atracao.html", {"form": form})
+
+
+@login_required
+def criar_pacote(request):
+    if request.method == "POST":
+        form = PacoteForm(request.POST)
+        if form.is_valid():
+            pacote = form.save(commit=False)
+            pacote.empresa = Empresa.objects.get(user=request.user)
+            pacote.save()
+            return redirect("empresas:dashboard_empresa")
+    else:
+        form = PacoteForm()
+    return render(request, "empresas/criar_pacote.html", {"form": form})
+
+
+# views.py
+
+from django.contrib.auth import logout
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("accounts/login.html")

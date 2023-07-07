@@ -1,4 +1,7 @@
 from django.db import models
+from django.core.validators import MinValueValidator
+from decimal import Decimal
+from django.db import models
 from django.forms import ValidationError
 from django.contrib.auth.models import User
 
@@ -213,11 +216,6 @@ class DadosBancarios(models.Model):
             return f"{self.banco} - {self.agencia}/{self.conta}"
         else:
             return f"{self.get_tipo_chave_pix_display()}: {self.chave_pix}"
-
-
-from django.db import models
-from django.core.validators import MinValueValidator
-from decimal import Decimal
 
 
 class Atracao(models.Model):

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
-from .models import Empresa
+from .models import Empresa, Atracao, Pacote
 
 
 class EmpresaRegistrationForm(forms.ModelForm):
@@ -59,3 +59,27 @@ class LoginForm(AuthenticationForm):
         label="Password",
         widget=forms.PasswordInput(attrs={"class": "form-control"}),
     )
+
+
+class AtracaoForm(forms.ModelForm):
+    class Meta:
+        model = Atracao
+        fields = [
+            "nome",
+            "descricao",
+            "preco_fim_de_semana",
+            "preco_feriado",
+            "data_expiracao",
+        ]
+
+
+class PacoteForm(forms.ModelForm):
+    class Meta:
+        model = Pacote
+        fields = [
+            "nome",
+            "atracoes",
+            "preco_fim_de_semana",
+            "preco_feriado",
+            "data_expiracao",
+        ]
